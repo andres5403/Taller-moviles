@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "255878479458",
+    "project_id": "taller-ef781",
+    "storage_bucket": "taller-ef781.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:255878479458:android:2a4a72f66e2264ee4a5b3b",
+        "android_client_info": {
+          "package_name": "com.example.talller"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "255878479458-8h01g9mrlrr768mkckbc9f2p38bj59sb.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.talller",
+            "certificate_hash": "574bd222e297f7dce1f2c76a5e084c8d2a671ba1"
+          }
+        },
+        {
+          "client_id": "255878479458-pnd8ss5la89nogjbci2812u32iet4gd1.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBM26Nz_5fvXxqYDGa84nkFY2S9EXAwe9E"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "255878479458-pnd8ss5la89nogjbci2812u32iet4gd1.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
