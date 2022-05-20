@@ -18,4 +18,5 @@ public class MainActivity extends AppCompatActivity {
         Intent ventanaregistro = new Intent(this, Registrarse.class);
         startActivity(ventanaregistro);
     }
+
 }

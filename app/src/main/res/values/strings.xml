@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">Login</string>
+    <string name="invalid_mail">Ingrese un email valido</string>
+    <string name="invalid_password">Ingrese un contraseña valida, mayor de 6 digitos</string>
 </resources>
