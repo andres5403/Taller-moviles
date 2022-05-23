@@ -10,6 +10,11 @@
             android:supportsRtl="true"
             android:theme="@style/Theme.Talller">
         <activity
+                android:name=".Loggout"
+                android:exported="true"
+                android:label="@string/title_activity_loggout"
+                android:theme="@style/Theme.Talller.NoActionBar"/>
+        <activity
                 android:name=".Registrarse"
                 android:exported="true"/>
         <activity

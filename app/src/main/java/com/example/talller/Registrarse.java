@@ -18,6 +18,7 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseAuthException;
 
 public class Registrarse extends AppCompatActivity {
+    //conexion con firebase
     FirebaseAuth firebaseAuth;
     AwesomeValidation awesomeValidation;
     private EditText et_mail;
