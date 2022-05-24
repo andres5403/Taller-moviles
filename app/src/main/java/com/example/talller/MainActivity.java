@@ -1,6 +1,8 @@
 package com.example.talller;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
+import android.media.Image;
 import android.util.Patterns;
 import android.view.View;
 import android.widget.Button;
@@ -11,20 +13,34 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
 import com.basgeekball.awesomevalidation.AwesomeValidation;
 import com.basgeekball.awesomevalidation.ValidationStyle;
+import com.google.android.gms.auth.api.signin.GoogleSignIn;
+import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
+import com.google.android.gms.auth.api.signin.GoogleSignInClient;
+import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
+import com.google.android.gms.common.api.ApiException;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
-import com.google.firebase.auth.AuthResult;
-import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseAuthException;
-import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.auth.*;
+
+import java.util.HashMap;
 
 public class MainActivity extends AppCompatActivity {
     private EditText et_mail,et_pass;
-    private Button btn_Login;
+    private Button btn_Login,btn_google;
+
+
+    private GoogleSignInClient mGoogleSignInClient;
+    private final static  int RC_SIGN_IN = 123;
+
 
 
     AwesomeValidation awesomeValidation;
     FirebaseAuth firebaseAuth;
+
+
+
+
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,26 +51,26 @@ public class MainActivity extends AppCompatActivity {
         et_pass = findViewById(R.id.et_pass);
 
         btn_Login = findViewById(R.id.btn_Login);
+        btn_google = findViewById(R.id.btn_google);
+
+
 
         firebaseAuth = FirebaseAuth.getInstance();
 
-        FirebaseAuth mAuth = FirebaseAuth.getInstance();
-
-        FirebaseUser user = mAuth.getCurrentUser();
-
-
-        if(user!=null){
-            dentro();
-
-        }
-
-
-
+        crearSolicitud();
 
 
         awesomeValidation = new AwesomeValidation(ValidationStyle.BASIC);
         awesomeValidation.addValidation(this,R.id.et_mail, Patterns.EMAIL_ADDRESS,R.string.invalid_mail);
         awesomeValidation.addValidation(this,R.id.et_pass,".{6,}",R.string.invalid_password);
+
+
+        btn_google.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                signIn();
+            }
+        });
 
 
 
@@ -71,6 +87,7 @@ public class MainActivity extends AppCompatActivity {
                         public void onComplete(@NonNull Task<AuthResult> task) {
 
                             if (task.isSuccessful()){
+                                Toast.makeText(MainActivity.this, "Bienvenido", Toast.LENGTH_SHORT).show();
                                 dentro();
 
                             }else{
@@ -83,9 +100,65 @@ public class MainActivity extends AppCompatActivity {
                 }
             }
         });
+    }
 
+    private void crearSolicitud() {
+        GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
+                .requestIdToken(getString(R.string.default_web_client_id))
+                .requestEmail()
+                .build();
 
+        mGoogleSignInClient = GoogleSignIn.getClient(this,gso);
 
+    }
+
+    private void signIn(){
+        Intent signIntent = mGoogleSignInClient.getSignInIntent();
+        startActivityForResult(signIntent, RC_SIGN_IN);
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @NonNull Intent data){
+        super.onActivityResult(requestCode,resultCode,data);
+
+        if(requestCode==RC_SIGN_IN){
+            Task<GoogleSignInAccount>task=GoogleSignIn.getSignedInAccountFromIntent(data);
+            try {
+                GoogleSignInAccount account = task.getResult(ApiException.class);
+                AutenticacionFirebase(account);
+            }catch (ApiException e){
+                Toast.makeText(this,e.getMessage(),Toast.LENGTH_SHORT).show();
+
+            }
+        }
+    }
+
+    private void AutenticacionFirebase(GoogleSignInAccount account) {
+        AuthCredential credential = GoogleAuthProvider.getCredential(account.getIdToken(),null);
+        firebaseAuth.signInWithCredential(credential)
+                .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
+                    @Override
+                    public void onComplete(@NonNull Task<AuthResult> task) {
+                        if (task.isSuccessful()){
+                            FirebaseUser user = firebaseAuth.getCurrentUser();
+                            if (task.getResult().getAdditionalUserInfo().isNewUser()){
+                                String uid = user.getUid();
+                                String correo = user.getEmail();
+
+                                HashMap<Object,String> DatosUsuario = new HashMap<>();
+
+                                DatosUsuario.put("uid",uid);
+                                DatosUsuario.put("correo",correo);
+
+                            }
+                            startActivity(new Intent(MainActivity.this,Loggout.class));
+                        }
+                        else{
+                            Toast.makeText(MainActivity.this,"no se pudo",Toast.LENGTH_SHORT).show();
+
+                        }
+                    }
+                });
     }
 
 
@@ -102,6 +175,15 @@ public class MainActivity extends AppCompatActivity {
         Intent ventanaregistro = new Intent(this, Registrarse.class);
         startActivity(ventanaregistro);
     }
+    public void Ventanarestablecer(View view){
+        Intent i = new Intent(this, Recuperarpass.class);
+        startActivity(i);
+    }
+
+
+
+
+
 
 
 
