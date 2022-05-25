@@ -12,15 +12,56 @@
             android:text="Cerrar sesion"
             android:layout_width="match_parent"
             android:layout_height="wrap_content" android:id="@+id/btn_cerrar_sesion"
-            tools:layout_editor_absoluteY="507dp"
             app:layout_constraintEnd_toEndOf="parent" app:layout_constraintStart_toStartOf="parent"
             android:layout_marginStart="32dp" android:layout_marginEnd="32dp"
-            app:layout_constraintHorizontal_bias="0.0"/>
+            app:layout_constraintHorizontal_bias="0.0" app:layout_constraintTop_toBottomOf="@+id/result_text"
+            android:layout_marginTop="52dp"/>
     <Button
             android:text="Conexion"
             android:layout_width="match_parent"
             android:layout_height="wrap_content" android:id="@+id/btn_conexion"
             app:layout_constraintTop_toBottomOf="@+id/btn_cerrar_sesion" app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent" android:layout_marginTop="44dp" android:layout_marginEnd="32dp"
-            android:layout_marginStart="32dp" app:layout_constraintHorizontal_bias="0.0"/>
+            app:layout_constraintEnd_toEndOf="parent" android:layout_marginTop="24dp" android:layout_marginEnd="32dp"
+            android:layout_marginStart="32dp" app:layout_constraintHorizontal_bias="1.0"/>
+    <EditText
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:inputType="number"
+            android:ems="10"
+            android:id="@+id/first_number"
+            app:layout_constraintTop_toTopOf="parent" app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent" android:layout_marginTop="16dp"
+            android:hint="Ingrese el primer valor"/>
+    <EditText
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:inputType="number"
+            android:ems="10"
+            android:id="@+id/secondnumber"
+            app:layout_constraintTop_toBottomOf="@+id/first_number" app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent" android:layout_marginTop="16dp"
+            android:hint="Ingrese el segundo valor"/>
+    <Spinner
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" android:id="@+id/spinner"
+            app:layout_constraintTop_toBottomOf="@+id/secondnumber" android:layout_marginTop="108dp"
+            app:layout_constraintStart_toStartOf="parent" app:layout_constraintEnd_toEndOf="parent"
+            android:layout_marginStart="24dp" android:layout_marginEnd="24dp"
+            app:layout_constraintHorizontal_bias="0.0"/>
+    <Button
+            android:text="Calcular"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" android:id="@+id/btn_calcular"
+            app:layout_constraintTop_toBottomOf="@+id/spinner"
+            android:layout_marginTop="48dp" app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent" app:layout_constraintHorizontal_bias="0.498"
+            android:onClick="calcular"/>
+    <TextView
+            android:text="Resultado"
+            android:layout_width="match_parent"
+            android:layout_height="44dp" android:id="@+id/result_text"
+            app:layout_constraintTop_toBottomOf="@+id/btn_calcular"
+            android:layout_marginTop="32dp" app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent" android:layout_marginEnd="32dp"
+            android:layout_marginStart="32dp"/>
 </androidx.constraintlayout.widget.ConstraintLayout>
